@@ -1,0 +1,13 @@
+{
+  "name": "first-case",
+  "version": "1.0.0",
+  "description": "Phone Case online store built using MERN web stack",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Vincent Johnson",
+  "license": "ISC"
+}
