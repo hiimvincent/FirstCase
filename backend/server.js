@@ -2,6 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
+import { errorHandler, notFound } from "./middlewares/errorMiddleware.js";
+
+import productRoutes from "./routes/productRoutes.js";
 
 const app = express();
 
@@ -17,6 +20,12 @@ app.use(express.json());
 app.get("/api", (req, res) => {
   res.status(201).json({ success: true, message: "Welcome First Case" });
 });
+
+// Product Route
+app.use("/api/products", productRoutes);
+
+app.use(errorHandler);
+app.use(notFound);
 
 const PORT = process.env.PORT || 5000;
 
