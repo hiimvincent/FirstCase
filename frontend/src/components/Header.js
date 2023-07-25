@@ -8,7 +8,7 @@ const Header = () => {
       <Navbar bg="primary">
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>FirstCase</Navbar.Brand>
+            <Navbar.Brand>CLOTHSHOP</Navbar.Brand>
           </LinkContainer>
           <Nav className="ml-auto">
             <LinkContainer to="/cart">

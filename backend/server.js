@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import { errorHandler, notFound } from "./middlewares/errorMiddleware.js";
 
 import productRoutes from "./routes/productRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 const app = express();
 
@@ -18,11 +19,14 @@ app.use(express.json());
 
 // Default Route
 app.get("/api", (req, res) => {
-  res.status(201).json({ success: true, message: "Welcome First Case" });
+  res.status(201).json({ success: true, message: "Welcome Cloth Shop APP" });
 });
 
 // Product Route
 app.use("/api/products", productRoutes);
+
+// User Route
+app.use("/api/users", userRoutes);
 
 app.use(errorHandler);
 app.use(notFound);
