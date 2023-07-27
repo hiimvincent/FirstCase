@@ -8,6 +8,8 @@ import { cartReducers } from "./redux/reducers/cartReducers";
 import {
   userLoginReducer,
   userRegisterReducer,
+  userLoggedInReducer,
+  userUpdateProfileReducer,
 } from "./redux/reducers/userReducers";
 
 const rootReducers = combineReducers({
@@ -16,6 +18,8 @@ const rootReducers = combineReducers({
   cart: cartReducers,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
+  userLoggedIn: userLoggedInReducer,
+  userUpdateProfile: userUpdateProfileReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -28,8 +32,15 @@ const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
   : null;
 
+const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
+  ? JSON.parse(localStorage.getItem("shippingAddress"))
+  : [];
+
 const initialState = {
-  cart: { cartItems: cartItemsFtomStorage },
+  cart: {
+    cartItems: cartItemsFtomStorage,
+    shippingAddress: shippingAddressFromStorage,
+  },
   userLogin: { userInfo: userInfoFromStorage },
 };
 

@@ -75,3 +75,39 @@ export const registerUser = asyncHandler(async (req, res) => {
     },
   });
 });
+
+// @Desc Update profile
+// @Route /api/users/profile
+// @Method PUT
+export const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id);
+
+  if (!user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  const updateUserProfile = await User.findByIdAndUpdate(
+    req.user.id,
+    {
+      name: req.body.name || user.name,
+      email: req.body.email || user.email,
+      password: req.body.password || user.password,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  res.status(201).json({
+    success: true,
+    user: {
+      _id: updateUserProfile._id,
+      name: updateUserProfile.name,
+      email: updateUserProfile.email,
+      isAdmin: updateUserProfile.isAdmin,
+      token: generateToken(updateUserProfile._id),
+    },
+  });
+});

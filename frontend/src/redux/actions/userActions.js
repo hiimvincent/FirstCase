@@ -69,3 +69,68 @@ export const register = (name, email, password) => async (dispatch) => {
     });
   }
 };
+
+export const userDetailsLoggedIn = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: actions.USER_LOGGED_IN_FAIL });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      "http://localhost:5000/api/users/profile",
+      config
+    );
+
+    dispatch({ type: actions.USER_LOGGED_IN_SUCCESS, payload: data.user });
+  } catch (error) {
+    dispatch({
+      type: actions.USER_LOGGED_IN_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateProfile = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: actions.USER_UPDATE_PROFILE_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      "http://localhost:5000/api/users/profile",
+      user,
+      config
+    );
+
+    dispatch({ type: actions.USER_UPDATE_PROFILE_SUCCESS, payload: data.user });
+    localStorage.setItem("userInfo", JSON.stringify(data.user));
+  } catch (error) {
+    dispatch({
+      type: actions.USER_UPDATE_PROFILE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
