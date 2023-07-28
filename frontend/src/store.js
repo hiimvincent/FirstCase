@@ -11,6 +11,10 @@ import {
   userLoggedInReducer,
   userUpdateProfileReducer,
 } from "./redux/reducers/userReducers";
+import {
+  orderCreateReducer,
+  orderDetailsReducer,
+} from "./redux/reducers/orderReducers";
 
 const rootReducers = combineReducers({
   productList: productListReducer,
@@ -20,6 +24,8 @@ const rootReducers = combineReducers({
   userRegister: userRegisterReducer,
   userLoggedIn: userLoggedInReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  orderCreate: orderCreateReducer,
+  orderDetails: orderDetailsReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
