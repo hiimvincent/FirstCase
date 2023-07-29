@@ -26,7 +26,7 @@ export const orderCreateReducer = (state = {}, action) => {
 };
 
 export const orderDetailsReducer = (
-  state = { orderItems: [], shippingAddress: {} },
+  state = { loading: true, orderItems: [], order: {}, shippingAddress: {} },
   action
 ) => {
   switch (action.type) {
@@ -40,9 +40,59 @@ export const orderDetailsReducer = (
         ...state,
         loading: false,
         success: true,
-        order: true,
+        order: action.payload,
       };
     case actions.ORDER_DETAILS_FAILED:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const orderPayReducer = (state = {}, action) => {
+  switch (action.type) {
+    case actions.ORDER_PAY_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actions.ORDER_PAY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+      };
+    case actions.ORDER_PAY_FAILED:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case actions.ORDER_PAY_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const orderListMyOrderReducer = (state = { orders: [] }, action) => {
+  switch (action.type) {
+    case actions.ORDER_LIST_MY_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actions.ORDER_LIST_MY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        orders: action.payload,
+      };
+    case actions.ORDER_LIST_MY_FAILED:
       return {
         ...state,
         loading: false,

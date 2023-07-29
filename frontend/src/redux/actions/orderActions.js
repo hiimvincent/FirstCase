@@ -16,8 +16,6 @@ export const createOrder = (dataOrder) => async (dispatch, getState) => {
       },
     };
 
-    console.log(userInfo.token);
-
     const { data } = await axios.post(
       "http://localhost:5000/api/orders",
       dataOrder,
@@ -47,7 +45,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authotrization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
@@ -60,6 +58,72 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: actions.ORDER_DETAILS_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const payOrder =
+  (orderId, paymentResult) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: actions.ORDER_PAY_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `http://localhost:5000/api/orders/${orderId}/pay`,
+        paymentResult,
+        config
+      );
+
+      dispatch({ type: actions.ORDER_PAY_SUCCESS, payload: data.order });
+    } catch (error) {
+      dispatch({
+        type: actions.ORDER_PAY_FAILED,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const listMyOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: actions.ORDER_LIST_MY_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `http://localhost:5000/api/orders/myorders`,
+      config
+    );
+
+    dispatch({ type: actions.ORDER_LIST_MY_SUCCESS, payload: data.orders });
+  } catch (error) {
+    dispatch({
+      type: actions.ORDER_LIST_MY_FAILED,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
