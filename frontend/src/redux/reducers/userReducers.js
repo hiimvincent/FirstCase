@@ -76,6 +76,30 @@ export const userLoggedInReducer = (state = {}, action) => {
   }
 };
 
+export const userDetailsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case actions.USER_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actions.USER_DETAILS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+      };
+    case actions.USER_DETAILS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 export const userUpdateProfileReducer = (state = {}, action) => {
   switch (action.type) {
     case actions.USER_UPDATE_PROFILE_REQUEST:
@@ -92,6 +116,59 @@ export const userUpdateProfileReducer = (state = {}, action) => {
         user: action.payload,
       };
     case actions.USER_UPDATE_PROFILE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const usersListReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case actions.USER_LIST_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actions.USER_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        users: action.payload,
+      };
+    case actions.USER_LIST_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case actions.USER_LIST_RESET:
+      return {
+        ...state,
+        users: [],
+      };
+    default:
+      return state;
+  }
+};
+
+export const userDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case actions.USER_DELETE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actions.USER_DELETE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+      };
+    case actions.USER_DELETE_FAIL:
       return {
         ...state,
         loading: false,

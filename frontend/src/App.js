@@ -9,10 +9,13 @@ import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import ProtectedRoute from "./components/ProtectedRoute";
+import OnlyAdmin from "./components/OnlyAdmin";
 import ShippingScreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
+import UserListScreen from "./screens/UserListScreen";
+import UserEditScreen from "./screens/UserEditScreen";
 
 const App = () => {
   return (
@@ -40,6 +43,15 @@ const App = () => {
             </Route>
             <Route path="/order/:id" element={<ProtectedRoute />}>
               <Route path="/order/:id" element={<OrderScreen />} />
+            </Route>
+            <Route path="/admin/users" element={<OnlyAdmin />}>
+              <Route path="/admin/users" element={<UserListScreen />} />
+            </Route>
+            <Route path="/admin/users/edit/:id" element={<OnlyAdmin />}>
+              <Route
+                path="/admin/users/edit/:id"
+                element={<UserEditScreen />}
+              />
             </Route>
           </Routes>
         </Container>

@@ -111,3 +111,60 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
     },
   });
 });
+
+// @Desc Get users
+// @Route /api/users
+// @Route GET
+export const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+  res.status(201).json({ success: true, users });
+});
+
+// @Desc Delete user
+// @Route /api/users/:id
+// @Method DELETE
+export const deleteUser = asyncHandler(async (req, res) => {
+  let user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  await user.remove();
+  res.status(201).json({ message: "User removed" });
+});
+
+// @Desc Get user by ID
+// @Route /api/users/:id
+// @Method GET
+export const getUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  res.status(201).json({ success: true, user });
+});
+
+// @Desc Update user
+// @Route /api/users/:id
+// @Method PUT
+export const updateUser = asyncHandler(async (req, res) => {
+  let user = await User.findById(req.params.id);
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.isAdmin = req.body.isAdmin;
+
+    const updatedUser = await user.save();
+
+    res.status(201).json({ success: true, user: updatedUser });
+  } else {
+    res.status(401);
+    throw new Error("User not found");
+  }
+});
