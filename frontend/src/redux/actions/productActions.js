@@ -1,5 +1,6 @@
 import * as actions from "../constants/productConstants";
 import axios from "axios";
+import { logout } from "./userActions";
 
 export const listProduct = () => async (dispatch) => {
   try {
@@ -58,12 +59,49 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
 
     dispatch({ type: actions.PRODUCT_DELETE_SUCCESS });
   } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "not authorized, no token") {
+      dispatch(logout());
+    }
     dispatch({
       type: actions.PRODUCT_DELETE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: message,
+    });
+  }
+};
+
+export const createProduct = (dataProduct) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: actions.PRODUCT_CREATE_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.post(`http://localhost:5000/api/products`, dataProduct, config);
+
+    dispatch({ type: actions.PRODUCT_CREATE_SUCCESS });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "not authorized, no token") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: actions.PRODUCT_CREATE_FAIL,
+      payload: message,
     });
   }
 };
