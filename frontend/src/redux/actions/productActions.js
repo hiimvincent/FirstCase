@@ -22,6 +22,7 @@ export const listProduct = () => async (dispatch) => {
 
 export const listProductDetails = (id) => async (dispatch) => {
   try {
+    dispatch({ type: actions.PRODUCT_DETAILS_RESET });
     dispatch({ type: actions.PRODUCT_DETAILS_REQUEST });
 
     const { data } = await axios.get(
@@ -101,6 +102,44 @@ export const createProduct = (dataProduct) => async (dispatch, getState) => {
     }
     dispatch({
       type: actions.PRODUCT_CREATE_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const updateProduct = (dataProduct) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: actions.PRODUCT_UPDATE_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.put(
+      `http://localhost:5000/api/products/${dataProduct._id}`,
+      dataProduct,
+      config
+    );
+
+    dispatch({ type: actions.PRODUCT_UPDATE_SUCCESS });
+    dispatch({ type: actions.PRODUCT_UPDATE_RESET });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "not authorized, no token") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: actions.PRODUCT_UPDATE_FAIL,
       payload: message,
     });
   }

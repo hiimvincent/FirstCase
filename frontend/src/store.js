@@ -4,6 +4,7 @@ import {
   productListReducer,
   productDetailsReducer,
   productCreateReducer,
+  productUpdateReducer,
   productDeleteReducer,
 } from "./redux/reducers/productReducers";
 import { cartReducers } from "./redux/reducers/cartReducers";
@@ -22,12 +23,14 @@ import {
   orderDetailsReducer,
   orderPayReducer,
   orderListMyOrderReducer,
+  orderListOrderReducer,
 } from "./redux/reducers/orderReducers";
 
 const rootReducers = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
   productCreate: productCreateReducer,
+  productUpdate: productUpdateReducer,
   productDelete: productDeleteReducer,
   cart: cartReducers,
   userLogin: userLoginReducer,
@@ -42,6 +45,7 @@ const rootReducers = combineReducers({
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderListMy: orderListMyOrderReducer,
+  orderListOrder: orderListOrderReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -46,6 +46,8 @@ export const productDetailsReducer = (
         loading: false,
         error: action.payload,
       };
+    case actions.PRODUCT_DETAILS_RESET:
+      return {};
     default:
       return state;
   }
@@ -94,6 +96,34 @@ export const productCreateReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
+    default:
+      return state;
+  }
+};
+
+export const productUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case actions.PRODUCT_UPDATE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actions.PRODUCT_UPDATE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        error: null,
+      };
+    case actions.PRODUCT_UPDATE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case actions.PRODUCT_UPDATE_RESET: {
+      return {};
+    }
     default:
       return state;
   }
