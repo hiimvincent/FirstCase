@@ -2,23 +2,27 @@ import * as actions from "../constants/productConstants";
 import axios from "axios";
 import { logout } from "./userActions";
 
-export const listProduct = () => async (dispatch) => {
-  try {
-    dispatch({ type: actions.PRODUCT_LIST_REQUEST });
+export const listProduct =
+  (keyword = "", pageNumber = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: actions.PRODUCT_LIST_REQUEST });
 
-    const { data } = await axios.get("http://localhost:5000/api/products");
+      const { data } = await axios.get(
+        `http://localhost:5000/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+      );
 
-    dispatch({ type: actions.PRODUCT_LIST_SUCCESS, payload: data.products });
-  } catch (error) {
-    dispatch({
-      type: actions.PRODUCT_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      dispatch({ type: actions.PRODUCT_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: actions.PRODUCT_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const listProductDetails = (id) => async (dispatch) => {
   try {
@@ -144,3 +148,41 @@ export const updateProduct = (dataProduct) => async (dispatch, getState) => {
     });
   }
 };
+
+export const createProductReview =
+  (productId, review) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: actions.PRODUCT_CREATE_REVIEW_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      await axios.post(
+        `http://localhost:5000/api/products/${productId}/reviews`,
+        review,
+        config
+      );
+
+      dispatch({ type: actions.PRODUCT_CREATE_REVIEW_SUCCESS });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === "not authorized, no token") {
+        dispatch(logout());
+      }
+      dispatch({
+        type: actions.PRODUCT_CREATE_REVIEW_FAIL,
+        payload: message,
+      });
+    }
+  };

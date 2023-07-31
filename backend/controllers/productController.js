@@ -5,9 +5,29 @@ import Product from "../models/productModel.js";
 // @ROUTE /api/products
 // @METHOD GET
 export const getAll = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
+  const pageSize = 6;
+  const page = Number(req.query.pageNumber) || 1;
 
-  res.status(201).json({ success: true, products });
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: "i",
+        },
+      }
+    : {};
+
+  const count = await Product.countDocuments({ ...keyword });
+  const products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+
+  res.status(201).json({
+    success: true,
+    products,
+    page,
+    pages: Math.ceil(count / pageSize),
+  });
 });
 
 // @DESC Fetch single product
@@ -64,6 +84,48 @@ export const updateProduct = asyncHandler(async (req, res) => {
     const updatedProduct = await product.save();
 
     res.status(201).json({ success: true, product: updatedProduct });
+  } else {
+    res.status(401);
+    throw new Error("Product not found");
+  }
+});
+
+// @Desc Create new review
+// @Route /api/products/:id/reviews
+// @Method POST
+export const createProductReview = asyncHandler(async (req, res) => {
+  const { rating, comment } = req.body;
+
+  let product = await Product.findById(req.params.id);
+
+  if (product) {
+    const alreadyReviewed = product.reviews.find(
+      (r) => r.user.toString() === req.user._id.toString()
+    );
+
+    if (alreadyReviewed) {
+      res.status(401);
+      throw new Error("Already reviewed");
+    }
+
+    const review = {
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+      user: req.user._id,
+    };
+
+    product.reviews.push(review);
+
+    product.numReviews = product.reviews.length;
+
+    product.rating =
+      product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+      product.reviews.length;
+
+    await product.save();
+
+    res.status(201).json({ message: "Review added" });
   } else {
     res.status(401);
     throw new Error("Product not found");
