@@ -3,7 +3,6 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/actions/userActions";
-import SearchBox from "./SearchBox";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -22,7 +21,6 @@ const Header = () => {
           <LinkContainer to="/">
             <Navbar.Brand>CLOTHSHOP</Navbar.Brand>
           </LinkContainer>
-          <SearchBox />
 
           <Nav className="ml-auto">
             <LinkContainer to="/cart">
