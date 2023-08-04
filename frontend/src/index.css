@@ -8,6 +8,10 @@ a {
   text-decoration: none;
 }
 
+primary {
+  color: #fff
+}
+
 /** Header Style **/
 
 header .navbar-light .navbar-brand,
@@ -22,13 +26,17 @@ header .navbar-light .navbar-nav .nav-link:hover {
   color: #fff;
 }
 
+.nav-link .nav-link:focus .nav-link:active {
+  color: #fff
+}
+
 /** Product Style **/
 
 .rating {
   margin: 15px 0;
 }
 .rating i {
-  color: #f4f400;
+  color: #ff7851;
 }
 
 .carousel {
@@ -46,7 +54,7 @@ header .navbar-light .navbar-nav .nav-link:hover {
   content: "";
   width: 100%;
   height: 100%;
-  background-color: black;
+  background-color: #fff;
   opacity: 0.4;
   position: absolute;
   inset: 0;

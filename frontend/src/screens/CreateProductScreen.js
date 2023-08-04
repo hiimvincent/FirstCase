@@ -139,7 +139,7 @@ const CreateProductScreen = () => {
           {uploading && <Loading />}
         </Form.Group>
 
-        <Button className="mt-3" type="submit" variant="primary">
+        <Button className="mt-3" type="submit" variant="danger">
           {loading ? <Loading /> : `Add`}
         </Button>
       </Form>

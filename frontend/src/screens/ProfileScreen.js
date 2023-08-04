@@ -91,7 +91,7 @@ const ProfileScreen = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             ></Form.Control>
           </Form.Group>
-          <Button className="mt-3" type="submit" variant="primary">
+          <Button className="mt-3" type="submit" variant="danger">
             {loading ? <Loading /> : `Update Profile`}
           </Button>
         </Form>
@@ -135,7 +135,7 @@ const ProfileScreen = () => {
                   </td>
                   <td>
                     <LinkContainer to={`/order/${order._id}`}>
-                      <Button className="btn btn-sm" variant="primary">
+                      <Button className="btn btn-sm" variant="danger">
                         Details
                       </Button>
                     </LinkContainer>

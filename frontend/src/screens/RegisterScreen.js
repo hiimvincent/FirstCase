@@ -42,7 +42,7 @@ const RegisterScreen = () => {
 
   return (
     <>
-      <Meta title="Clothshop | Register" />
+      <Meta title="FirstCase | Register" />
       <FormContainer>
         <h2>Sign Up</h2>
         <Form onSubmit={handleSubmit}>
@@ -84,7 +84,7 @@ const RegisterScreen = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
             ></Form.Control>
           </Form.Group>
-          <Button className="mt-3" type="submit" variant="primary">
+          <Button className="mt-3" type="submit" variant="danger">
             {loading ? <Loading /> : `Sign Up`}
           </Button>
         </Form>

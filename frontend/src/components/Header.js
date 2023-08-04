@@ -16,16 +16,16 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar bg="primary">
+      <Navbar bg="danger">
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>CLOTHSHOP</Navbar.Brand>
+            <Navbar.Brand>FirstCase</Navbar.Brand>
           </LinkContainer>
 
           <Nav className="ml-auto">
             <LinkContainer to="/cart">
               <Nav.Link>
-                <i className="fas fa-shopping-cart"></i> Cart
+                <i className="fas fa-shopping-cart"></i> My Cart
               </Nav.Link>
             </LinkContainer>
             {userInfo ? (
@@ -40,7 +40,7 @@ const Header = () => {
             ) : (
               <LinkContainer to="/login">
                 <Nav.Link>
-                  <i className="fas fa-user"></i> SignIn
+                  <i className="fas fa-user"></i> Login
                 </Nav.Link>
               </LinkContainer>
             )}

@@ -168,7 +168,7 @@ const EditProductScreen = () => {
             ></Form.Control>
             {uploading && <Loading />}
           </Form.Group>
-          <Button className="mt-3" type="submit" variant="primary">
+          <Button className="mt-3" type="submit" variant="danger">
             {loadingUpdate ? <Loading /> : `Edit`}
           </Button>
         </Form>

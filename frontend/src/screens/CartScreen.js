@@ -105,7 +105,7 @@ const CartScreen = () => {
                   <ListGroup.Item>
                     <Button
                       className="w-100 p-2"
-                      variant="primary"
+                      variant="danger"
                       disabled={cartItems.length === 0}
                       onClick={checkoutHandler}
                     >

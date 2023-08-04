@@ -214,7 +214,7 @@ const OrderScreen = () => {
                           <Button
                             onClick={deliverHandler}
                             className="w-100"
-                            variant="primary"
+                            variant="danger"
                           >
                             Mark as deliverd
                           </Button>

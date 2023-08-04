@@ -41,7 +41,7 @@ const ProductListScreen = () => {
         </Col>
         <Col className="text-end">
           <LinkContainer to="/admin/products/create">
-            <Button variant="primary">
+            <Button variant="danger">
               <i className="fas fa-plus"></i> Create Product
             </Button>
           </LinkContainer>
@@ -79,7 +79,7 @@ const ProductListScreen = () => {
                           className="ml-1"
                           to={`/admin/product/edit/${product._id}`}
                         >
-                          <Button className="btn btn-sm" variant="primary">
+                          <Button className="btn btn-sm" variant="danger">
                             <i className="fas fa-edit"></i>
                           </Button>
                         </LinkContainer>

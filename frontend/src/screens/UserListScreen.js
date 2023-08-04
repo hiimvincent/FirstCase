@@ -68,7 +68,7 @@ const UserListScreen = () => {
                         className="ml-1"
                         to={`/admin/users/edit/${user._id}`}
                       >
-                        <Button className="btn btn-sm" variant="primary">
+                        <Button className="btn btn-sm" variant="danger">
                           <i className="fas fa-edit"></i>
                         </Button>
                       </LinkContainer>

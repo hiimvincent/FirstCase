@@ -83,7 +83,7 @@ const ProductScreen = () => {
                   <ListGroup.Item>
                     <Rating
                       value={product.rating}
-                      text={`${product.rating} Reviews`}
+                      text={`${product.rating} Stars`}
                     />
                   </ListGroup.Item>
                   <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
@@ -139,6 +139,7 @@ const ProductScreen = () => {
                       <Button
                         onClick={addToCartHandler}
                         className="btn btn-primary d-block w-100"
+                        variant="danger"
                         type="button"
                         disabled={product.countInStock === 0}
                       >
@@ -154,7 +155,7 @@ const ProductScreen = () => {
                 <h2>Reviews</h2>
                 {loadingProductReview && <Loading />}
                 {product.reviews.length === 0 && (
-                  <Message variant="info">No Reviews</Message>
+                  <Message variant="danger">No Reviews</Message>
                 )}
                 <ListGroup variant="flush">
                   {product.reviews.map((review) => (
@@ -166,7 +167,7 @@ const ProductScreen = () => {
                     </ListGroup.Item>
                   ))}
                 </ListGroup>
-                <h3>Write a customer review</h3>
+                <h3>Write a Review</h3>
                 {userInfo ? (
                   <Form onSubmit={submitHandler}>
                     {errorProductReview && (
@@ -197,12 +198,12 @@ const ProductScreen = () => {
                         placeholder="Comment"
                       ></Form.Control>
                     </Form.Group>
-                    <Button type="submit" className="mt-3" vatiant="primary">
+                    <Button type="submit" className="mt-3" variant="danger">
                       Submit
                     </Button>
                   </Form>
                 ) : (
-                  <Message variant="info">
+                  <Message variant="danger">
                     <Link to="/login">Sign in</Link> to write a review
                   </Message>
                 )}

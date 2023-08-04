@@ -69,7 +69,7 @@ const OrderListScreen = () => {
                         className="ml-1"
                         to={`/order/${order._id}`}
                       >
-                        <Button className="btn btn-sm" variant="primary">
+                        <Button className="btn btn-sm" variant="danger">
                           Details
                         </Button>
                       </LinkContainer>

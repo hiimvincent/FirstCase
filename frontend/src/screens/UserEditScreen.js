@@ -83,7 +83,7 @@ const UserEditScreen = () => {
               onChange={(e) => setIsAdmin(!isAdmin)}
             ></Form.Check>
           </Form.Group>
-          <Button className="mt-3" type="submit" variant="primary">
+          <Button className="mt-3" type="submit" variant="danger">
             {loadingUpdate ? <Loading /> : `Update`}
           </Button>
         </Form>
